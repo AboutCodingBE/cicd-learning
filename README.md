@@ -2,6 +2,8 @@
 
 ### Deploying to Fly.io
 
+Guide: https://medium.com/@vergil333/deploy-spring-boot-to-fly-iof-d54d5ca05243
+
 - Need to create a docker file 
   - Testing the docker file: starting hte docker deamon on mac means starting docker desktop: 
   - `open -a Docker`
