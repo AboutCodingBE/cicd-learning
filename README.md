@@ -11,4 +11,16 @@ Guide: https://medium.com/@vergil333/deploy-spring-boot-to-fly-iof-d54d5ca05243
   - Don't forget the '.' at the end. It is for the PATH variable, most likely wehre the docker file is located
   - To run the image: `docker run -p 8001:8080 cicdtraining:latest`. The -p is for publishing the port on the container 
     to local machine
-- 
+
+##### Fly.io itself
+
+https://fly.io/docs/getting-started/launch-demo/
+
+FYI: flyctl was installed using brew / homebrew 
+Created an account using github: nicholas@aboutcoding.be
+
+Deploying an app: 
+
+https://fly.io/docs/launch/create/ 
+
+
