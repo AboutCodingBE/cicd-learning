@@ -1,0 +1,19 @@
+app = "cicd-training"
+primary_region = "ams"
+
+[build]
+# Fly.io will build from your Dockerfile
+
+[env]
+ENVIRONMENT = "production"
+
+[http_service]
+internal_port = 8080
+force_https = true
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 0
+
+[[vm]]
+size = "shared-cpu-1x"
+memory = "256mb"

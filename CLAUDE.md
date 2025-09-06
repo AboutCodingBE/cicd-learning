@@ -59,3 +59,4 @@ This is a Spring Boot 3.5.5 web application built with Maven and Java 21, design
 - Default Spring Boot test slice available for context loading verification
 - never run git commands automatically, not even when asked
 - never do database operations automatically,not even when asked
+- always write tests using AssertJ assertions
