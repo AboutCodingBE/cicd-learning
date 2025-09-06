@@ -18,9 +18,12 @@ https://fly.io/docs/getting-started/launch-demo/
 
 FYI: flyctl was installed using brew / homebrew 
 Created an account using github: nicholas@aboutcoding.be
+used the command: fly auth signup
 
 Deploying an app: 
 
 https://fly.io/docs/launch/create/ 
+
+
 
 
