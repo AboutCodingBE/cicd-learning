@@ -1,5 +1,10 @@
 # GitHub Actions Pipeline for Fly.io Deployment
 
+> ** Important! **
+> 
+> You need to create the app on fly.io first. This is a bit silly for a deployment pipeline I think, but
+> I ll see if I can do something about that. 
+
 This guide shows how to set up a simple CI/CD pipeline using GitHub Actions to automatically deploy your application to Fly.io whenever you push to the main branch. Fly.io will build your Docker image from your Dockerfile.
 
 ## Why This Approach?
@@ -260,3 +265,51 @@ Once this basic pipeline is working, you can enhance it with:
 - **Slack/Discord notifications**
 
 This simple pipeline gives you automatic deployments with minimal setup - perfect for getting started with CI/CD! 🚀
+
+
+## Problems encountered: 
+
+### Could not find app (by fly.io)
+Fixed that by creating the app first on fly.io using a command. See the README warning about this. 
+
+### Failed to fetch from source
+
+```shell
+> [2/2] COPY target/*.jar app.jar:
+------
+Error: failed to fetch an image or build from source: error building: failed to solve: lstat /tmp/buildkit-mount1157068294/target: no such file or directory
+Error: Process completed with exit code 1.
+```
+
+If I choose to let fly.io build the docker file, I need set up the docker file differently. 
+In the future, I might need to adjust the fly.toml file to take a docker image. That means getting it on a docker image
+repository or artifact
+
+Claude suggests the following change: 
+
+```docker
+FROM eclipse-temurin:21-jdk-alpine AS build
+WORKDIR /app
+
+# Copy Maven wrapper and pom.xml first (for better caching)
+COPY .mvn/ .mvn/
+COPY mvnw pom.xml ./
+
+# Download dependencies (cached if pom.xml doesn't change)
+RUN ./mvnw dependency:go-offline
+
+# Copy source code and build
+COPY src/ src/
+RUN ./mvnw clean package -DskipTests
+
+# Runtime stage
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+
+# Copy the built JAR from build stage
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
